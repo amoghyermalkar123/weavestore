@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// Use this code to constantly ask for a key while you parallely perform other write
+// operations, this is to test concurrency
 func main() {
 
 	url := "http://localhost:8000/read/"
