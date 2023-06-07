@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	// initialize the KV store with options
 	// init http handlers
 	e := echo.New()
 	apiHandler := api.NewAPIInstance()
@@ -18,5 +17,7 @@ func main() {
 	e.POST("/delete/", apiHandler.DeleteObject)
 	e.POST("/update/", apiHandler.UpdateObject)
 	e.POST("/updateBulk/", apiHandler.UpdateBulk)
+
+	// start the API Server
 	e.Logger.Fatal(e.Start(":8000"))
 }

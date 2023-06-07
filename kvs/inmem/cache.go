@@ -21,6 +21,7 @@ type cache struct {
 	lruList *list.List
 }
 
+// Put - atomically put data in memory, evicting lru object upon hitting cap ceiling
 func (c *cache) Put(key string, val any) int {
 	c.rwlock.Lock()
 	defer c.rwlock.Unlock()
@@ -37,6 +38,7 @@ func (c *cache) Put(key string, val any) int {
 	return resp.Success
 }
 
+// Get - atomically retrieve a value from memory
 func (c *cache) Get(key string) any {
 	c.rwlock.Lock()
 	defer c.rwlock.Unlock()
@@ -49,6 +51,7 @@ func (c *cache) Get(key string) any {
 	}
 }
 
+// Delete a value from store
 func (c *cache) Delete(key string) int {
 	c.rwlock.Lock()
 	defer c.rwlock.Unlock()
@@ -59,6 +62,7 @@ func (c *cache) Delete(key string) int {
 	return resp.Success
 }
 
+// Update updates an item in the store. Update here acts like an Upsert
 func (c *cache) Update(key string, val any) int {
 	return c.Put(key, val)
 }
