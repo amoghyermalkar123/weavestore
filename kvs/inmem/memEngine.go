@@ -14,7 +14,7 @@ type MemoryEngine interface {
 
 func NewMemoryEngine(cacheSize uint64) MemoryEngine {
 	return &cache{
-		bucket:  make(map[string]any, cacheSize),
+		bucket:  make(map[string]*list.Element, cacheSize),
 		rwlock:  &sync.RWMutex{},
 		lruList: list.New(),
 	}

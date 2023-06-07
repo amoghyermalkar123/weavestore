@@ -10,14 +10,15 @@ const NULL = "NULL"
 
 // cache implements MemoryEngine interface
 type cache struct {
-	bucket  map[string]any
+	bucket  map[string]*list.Element
 	rwlock  *sync.RWMutex
 	lruList *list.List
 }
 
 func (c *cache) Put(key string, val any) int {
 	c.rwlock.Lock()
-	c.bucket[key] = val
+	item := c.lruList.PushFront(key)
+	c.bucket[key] = item
 	c.rwlock.Unlock()
 	return resp.Success
 }
@@ -27,6 +28,7 @@ func (c *cache) Get(key string) any {
 	defer c.rwlock.Unlock()
 
 	if value, ok := c.bucket[key]; ok {
+		c.lruList.MoveToFront(value)
 		return value
 	} else {
 		return NULL
