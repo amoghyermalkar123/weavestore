@@ -1,10 +1,8 @@
 weavestore is an in-memory key-value store.
 
 ### API:
-```
-http://localhost:8000/insert/
-```
-To insert a single object into the store
+
+* /insert -> To insert a single object into the store
 * /read -> Retrieve a value by it's key
 * /delete -> Delete a key
 * /update -> Update a value for a key
