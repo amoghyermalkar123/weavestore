@@ -19,7 +19,6 @@ func NewAPIInstance() *Handler {
 	return &Handler{
 		kvStore: kvs.NewStore(
 			kvs.WithMaxRAMSize(1000),
-			kvs.WithCleanupIntervalFrequency(10),
 		),
 	}
 }
