@@ -19,7 +19,7 @@ weavestore is an in-memory key-value store. It has an HTTP API that can be used 
 * For the tests, I have used the ginkgo framework, the thought here is to mimick behavior based testing. I have kept the tests straightforward and have covered the core set of features since it would take alot more time to come up with edge cases and write tests for the same.
 * I have also provided a docker image to demonstrate a complete version of the assignment.
 * On the response codes, I have taken a very basic inspiration from redis's resp protocol.
-* for the eviction policy, there might be some edge cases or bugs which I might not have covered since those would take some amount of brainstorming. Hence have used go's List structure to implement a naive LRU based eviction policy.
+* For the eviction policy, there might be some edge cases or bugs which I might not have covered since those would take some amount of brainstorming. Hence have used go's List structure to implement a naive LRU based eviction policy.
 
 ### How to run the project:
 * Clone the project on your local machine. Go into the root of the project and run `make setup_and_run` to build the docker image and start the server.
