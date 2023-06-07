@@ -10,6 +10,7 @@ const NULL = "NULL"
 
 // cache implements MemoryEngine interface
 type cache struct {
+	maxSize int
 	bucket  map[string]*list.Element
 	rwlock  *sync.RWMutex
 	lruList *list.List
@@ -18,6 +19,13 @@ type cache struct {
 func (c *cache) Put(key string, val any) int {
 	c.rwlock.Lock()
 	item := c.lruList.PushFront(key)
+	if len(c.bucket) >= c.maxSize {
+		oldest := c.lruList.Back()
+		if oldest != nil {
+			delete(c.bucket, key)
+			c.lruList.Remove(oldest)
+		}
+	}
 	c.bucket[key] = item
 	c.rwlock.Unlock()
 	return resp.Success
