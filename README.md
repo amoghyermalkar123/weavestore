@@ -1,4 +1,4 @@
-weavestore is an in-memory key-value store.
+weavestore is an in-memory key-value store. It has an HTTP API that can be programatically be used to perform CRUD operations on the store. Refer to the API below. You can find the documentation reference at the bottom of the readme as well.
 
 ### API:
 
