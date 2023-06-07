@@ -42,7 +42,7 @@ func (h *Handler) Read(c echo.Context) error {
 	}
 
 	value := h.kvStore.GetItem(object.Key)
-	return c.JSON(http.StatusOK, value)
+	return c.JSON(http.StatusOK, map[string]any{"Value": value})
 }
 
 func (h *Handler) DeleteObject(c echo.Context) error {
