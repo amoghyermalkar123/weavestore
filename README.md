@@ -17,4 +17,3 @@ weavestore is an in-memory key-value store.
 * Other automations that are useful -
     - `make test` to run all the tests
     - `make check` to run linters on the entire project
-* I have also attached some benchmarks for the memory engine Put and Get operations. (Just for fun)
