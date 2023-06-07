@@ -6,8 +6,11 @@ import (
 	"weavestore/kvs/resp"
 )
 
-var NULL = &list.Element{
-	Value: "NULL",
+const NULL = "NULL"
+
+type cacheEntry struct {
+	key string
+	val any
 }
 
 // cache implements MemoryEngine interface
@@ -20,18 +23,17 @@ type cache struct {
 
 func (c *cache) Put(key string, val any) int {
 	c.rwlock.Lock()
+	defer c.rwlock.Unlock()
 
 	if len(c.bucket) >= c.maxSize {
 		oldest := c.lruList.Back()
 		if oldest != nil {
-			delete(c.bucket, key)
+			delete(c.bucket, oldest.Value.(*cacheEntry).key)
 			c.lruList.Remove(oldest)
 		}
 	}
-
-	item := c.lruList.PushFront(val)
+	item := c.lruList.PushFront(&cacheEntry{key: key, val: val})
 	c.bucket[key] = item
-	c.rwlock.Unlock()
 	return resp.Success
 }
 
@@ -41,7 +43,7 @@ func (c *cache) Get(key string) any {
 
 	if value, ok := c.bucket[key]; ok {
 		c.lruList.MoveToFront(value)
-		return value
+		return value.Value.(*cacheEntry).val
 	} else {
 		return NULL
 	}
