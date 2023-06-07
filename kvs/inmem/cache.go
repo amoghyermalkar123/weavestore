@@ -3,10 +3,12 @@ package inmem
 import (
 	"container/list"
 	"sync"
-	"weavestore/resp"
+	"weavestore/kvs/resp"
 )
 
-const NULL = "NULL"
+var NULL = &list.Element{
+	Value: "NULL",
+}
 
 // cache implements MemoryEngine interface
 type cache struct {
@@ -18,7 +20,7 @@ type cache struct {
 
 func (c *cache) Put(key string, val any) int {
 	c.rwlock.Lock()
-	item := c.lruList.PushFront(key)
+
 	if len(c.bucket) >= c.maxSize {
 		oldest := c.lruList.Back()
 		if oldest != nil {
@@ -26,6 +28,8 @@ func (c *cache) Put(key string, val any) int {
 			c.lruList.Remove(oldest)
 		}
 	}
+
+	item := c.lruList.PushFront(val)
 	c.bucket[key] = item
 	c.rwlock.Unlock()
 	return resp.Success
@@ -47,7 +51,7 @@ func (c *cache) Delete(key string) int {
 	c.rwlock.Lock()
 	defer c.rwlock.Unlock()
 	if _, ok := c.bucket[key]; !ok {
-		return resp.NoOp
+		return resp.Fail
 	}
 	delete(c.bucket, key)
 	return resp.Success
