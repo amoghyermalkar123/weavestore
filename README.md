@@ -2,12 +2,16 @@ weavestore is an in-memory key-value store.
 
 ### API:
 
-#### Insert (/insert)
+#### Insert (http://localhost:8000/insert/)
 ``` To insert a single object into the store```
-* /read -> Retrieve a value by it's key
-* /delete -> Delete a key
-* /update -> Update a value for a key
-* /updateBulk -> Update a bulk of keys
+#### Read (http://localhost:8000/read/)
+``` Retrieve a value by it's key ```
+#### Delete (http://localhost:8000/delete/)
+``` Delete a key ```
+#### Update (http://localhost:8000/update/)
+``` Update a value for a key ```
+#### BulkUpdate (http://localhost:8000/updateBulk/)
+``` Update a bulk of keys ```
 
 ### Implementation Specifics:
 * Update operation is implemented as an Upsert. Update existing values and inserting new ones.
