@@ -14,6 +14,7 @@ setup:
 	go install honnef.co/go/tools/cmd/staticcheck@2022.1
 
 check:
+	$(MAKE) setup
 	python3 pre-commit-3.0.3.pyz run --all-files
 
 setup_and_run:
