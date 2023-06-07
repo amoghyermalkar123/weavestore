@@ -15,3 +15,7 @@ setup:
 
 check:
 	python3 pre-commit-3.0.3.pyz run --all-files
+
+setup_and_run:
+	docker build -t weavestore .
+	docker run -it --rm -p 8000:8000 weavestore
